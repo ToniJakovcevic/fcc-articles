@@ -1,0 +1,177 @@
+1 Becoming a successful software engineer
+This chapter covers
+Avoiding misconceptions about initial skill requirements
+Focusing on skills that will help you become a better software developer
+From the outside, the software industry looks very compelling: many countries have no unemployment in the industry, salaries are fair, there is always room to grow, travel is often involved, and there is the option to work from your couch for a Silicon Valley startup. Why isn’t everyone working on software?
+
+The truth is that while the field might seem interesting, getting in is not that simple. I knew I wanted to be a software developer before I owned my first computer. I made the choice when I was a kid, based on the value computers were generating even then. But when it was time for me to jump into the real world, it wasn’t just difficult to get in, it was scary and unwelcoming. I had no guide, no map that would help me navigate the maze that was job interviews or even job listings. I would spend a few hours every weekend going through the Jobs section of my local newspaper, looking for opportunities for junior developers without experience.
+
+Finding your first job as a software developer can be challenging at best; most companies looking for entry-level engineers require them to either have experience with some of the latest frameworks and technologies or to understand a lot of advanced concepts such as design patterns, software development best practices, and version control. Then they’ll go into vague requirements, such as having great “interpersonal skills” or knowledge about other IT-related areas. What is that about?
+
+I compiled the following junior developer job listing from multiple samples on the internet:
+
+Bachelor’s degree in related areas and a minimum of one year of experience in similar roles
+Knowledge of secure software development
+Intermediate skills associated with design, development, modifications, and deployment of software, including object-oriented programming
+Knowledge of other IT-related areas
+Proof of software repository skills
+Proof of effective communication and interpersonal skills
+Self-motivated and works independently
+Proof of problem-solving skills
+Intermediate skills in C#, ASP.NET MVC, SQL Server, TypeScript, and React.js
+Experience using Git and GitHub
+Looking at that list, how can anyone trying to get into the industry not feel intimidated? Anyone looking at that job posting will assume they need at least two more years of experience before being taken seriously.
+
+Having been through the same experience 18 years ago, I still remember the type of questions I had:
+
+Should I even bother applying for the job? I only have 3 of the 10 required skills.
+Do I need to stop studying X and switch to Y now? This week everyone’s asking for Y developers.
+How can I get experience if I’m looking for my first job?
+They’re probably the same questions that any new developer looking to start their career has. But here’s the kicker: these questions are normal. You’re not figuring out that you’re not cut out to be a developer—you’re just living through the junior developer experience.
+
+That’s why I’m writing this book: to help you find your way into a successful career. I’ve been through the same struggles that any new developer experiences, and I’ve had an underpaid first job because I had no experience. I’ve met some great people who through me quite a lot about working in a team, and I’ve met some difficult people who, through their behavior, taught me a considerable amount about what to avoid.
+
+Throughout this book, I’ll be sharing bits and pieces of my own journey. I’ll cover the best practices you’ll have to apply to your code, and I’ll take you through some core technical concepts such as unit testing and refactoring so you understand what they mean and the importance they have in a software project. I’ll help you understand how to balance your personal and professional life without burning out in the process, and I’ll give you some hints for your first technical interview. In the end, I’ll go into what it means to be a developer working inside a bigger team, and I’ll discuss what it means to lead a team, so you understand what your manager is going through with you. Throughout this book I hope to show you that you’re just getting started in your journey, and that the issues you’re facing and the doubts you’re having are completely normal. They’re part of the developer-experience pack you bought when you decided to live off your coding skills.
+
+In this chapter, I’ll start by covering the basics: what exactly do you need in order to work as a developer? There is a lot of noise on the internet, and asking this question on Google can bring up a lot of different articles. Everyone has their opinion, and most people tend to focus on functional skills—the things you need to learn before thinking of applying for a job. In my experience, they’re not the most relevant skills, nor the most important ones. You’ll pick those up through experience if you have to. The truly important qualities of a good developer (even one who’s never worked a single day in their life) are not technical.
+
+We’ll look at two lists in this chapter: the common misconceptions of what you need to be a developer, and the truly useful skills you’ll actually need.
+
+You can automatically highlight by performing the text selection while keeping the alt/ key pressed.
+1.1 What you don’t need
+I’ll start by covering some of the biggest misconceptions around the requirements for getting into the software industry. None of the following qualifications will hurt your chances, but they’re not hard requirements needed to start the job. Don’t think of this as a to-do list, but rather, a nice-to-eventually-have list.
+
+1.1.1 Bachelor’s degree in CS or related degree
+This is essentially four or more years of formal education. I went through it, I did my best to finish it, and I failed on my first try. I tried to be a “Software Engineer,” a five-year course of study in my country, but by the time I was halfway through my studies I got my first job, and my formal education ended there.
+
+Did I regret it? I did, which is why a few years later I completed a technical degree (two years plus a final project) to formalize a lot of my practical experience. Did I need the first two years of university? I did, yes, but mainly because they formalized a lot of the basic programming concepts I had figured out on my own, learning how to code for fun. But back then there were no bootcamps, my internet access was limited by my 2,400 baud modem, and my learning resources were mainly hacker e-magazines (which were text files with some ASCII art thrown in).
+
+The situation now is completely different; anyone looking to learn how to code has the world’s knowledge at their disposal. This is no exaggeration; there are free online resources such as YouTube or freeCodeCamp (www.freeCodeCamp.org), which have everything you need to go from zero to workable. And while it is true that not everyone can learn on their own, you also have other options: paid courses from sites like Udemy or Skillshare, which will cost a lot less than a university degree and will give you access to virtual classrooms, Q&A sessions with teachers, and contact with other students going through the same problems you are.
+
+Any of these resources can give you the practical knowledge required to start coding, and while it is true that many people value the mention of a college degree as part of your resume, a lot of companies are paying less attention to that single bullet point. Granted, this may be less true in some countries than others, but it’s also true that ours is a very international profession in the sense that we can work for companies anywhere in the world. When that starts happening, the value of a college degree starts diminishing as time goes by. I’ve personally performed hundreds of interviews with new developers, and I’ve learned that a college degree should not be an entry requirement.
+
+Don’t get me wrong. I believe there is still value in formal education, and I’ll go into more detail about that later on, but it’s not necessarily your best choice if you’re looking to get your first developer job. Especially if you’re in a hurry, a 4-or-more-year investment (money and time) may well be too much; when compared to 6 to 12 months for a practical bootcamp, the choice should be obvious.
+
+Do you need more? Yes, of course. A bootcamp or online education won’t cover everything you need to know, but that’s not what we’re after here. We’re focusing on the practical aspects of the profession, so you can start learning by doing.
+
+1.1.2 Knowing the software development lifecycle
+A typical software project has to go through a development lifecycle:
+
+You first need to do a requirement analysis to understand exactly what you need to do.
+You then move on to planning your project to understand when you’ll need to do those things and how much time you’ll need.
+Designing the project architecture comes third. Once you know the “what” and the “when,” you have to start thinking about the “how,” and the architecture will give you the blueprints for that.
+Only then can you start writing code. This is the step that most developers tend to focus on, but as you can see, it’s not the first thing you’d normally do.
+Testing your code and your product comes next. Determining whether the previous step produced the right output is a must-do before moving on to the next one.
+Deploying your product is the final step. This is when you give it to users so they can start testing it and giving you feedback.
+Because it’s a cycle, you’d take that feedback from step 6 and start all over again, but you get the idea.
+
+If you’ve never worked on a software project before, you’ve never had to apply most of these concepts, and that’s perfectly fine. You don’t need to understand any of that to get your first job. Yes, these steps will be part of your tasks, and you’ll be applying this knowledge every day. But turning it into an entry-level requirement for the role of junior developer is like asking an acting surgeon to lead their first surgery. Eventually they’ll be able to do that, and they’ve probably read about it, but you don’t want them doing it on day one. It’s the same for you as a developer. You should not be expected to understand what all these steps really mean on day one—you won’t be in charge of doing it anyway. You’ll learn about it because you’ll be part of the process.
+
+1.1.3 A math, physics, or similar degree
+I’m guilty of believing this one myself, back when I started. I blame college because they were teaching me calculus and algebra at the same time I was learning to code. Was that a mistake? In the long run, no, but it did nothing to help me get my first job as a developer.
+
+Math, physics, or other sciences are not going to help you understand programming. Some of them require you to understand abstract concepts (such as infinity, or the number pi), which can be good practice when you need to create mental models of an algorithm you’re trying to write. However, you won’t be solving hard math problems or implementing difficult physics simulations on your first job, and even if you happen to find yourself in such a conundrum, there is a big chance you’ll be using someone else’s code library.
+
+So should you get a math degree before making the jump to computer science or a junior developer role? No, not at all. Eventually you might find shared concepts between programming and these other sciences (such as sets in many programming languages), or you might find yourself implementing concepts from other realms in your code (such as implementing the concept of gravity on a platform game), but none of this requires a full degree before starting to code.
+
+Note
+The role of a junior data scientist might require you to have a math or science degree. That requirement is not for understanding how to code but rather how to model the problems you’re trying to solve.
+
+1.1.4 Certifications
+Certifications are tempting because they have that “not-as-long-as-formal-education-but-still-useful” kind of vibe. And they do have their merit, but they’re not a hard requirement to get a developer job.
+
+Listing certifications on your junior developer resume shows you care about your learning and about improving your skills. This is indeed a good thing, but it’s not a requirement. You won’t find job listings for a junior developer asking for particular certifications. Instead, they’ll be looking for knowledge about a group of technologies, and this is easier to achieve by following online courses or bootcamps.
+
+What I’m saying here is, if you have to choose between investing in a certification or an online course, go for the latter. Get a broader education before you start narrowing down on a particular subject.
+
+1.1.5 The desire to work in a fast-paced environment
+You can find this requirement in many job listings and in basic software development skill sets. But what does “fast-paced” even mean here? It could mean almost anything, but I’m assuming (because that is what anyone reading a job listing would do) it means you have to be interested in working in an industry that changes a lot. And by that, I mean the technologies, working methodologies, project focus, or even projects themselves change.
+
+That probably sounds scary, especially for someone who’s not even working yet. But I can confirm that you can be a software developer and still hate “fast-paced” environments. Not everyone likes changing technologies, or even changing projects. You don’t have to, either.
+
+Granted, startups normally work that way because they have to. They normally need to grow fast and adapt to changes. Contractors work like that too. There are companies out there that will hire you to be part of someone’s team for the duration of a project, and when that’s done, you move on to the next client. If you find those scenarios interesting, go ahead and apply. Chances are you’ll enjoy your work there.
+
+But there are other companies—ones that have been working for years on their products—that tend to have a more stable environment. In fact, the perfect example of that is banks (I should know; I’ve worked for some of them as an external contractor). They have so much data from so many clients that making a change to their tech stack is quite hard and, honestly, scary for them.
+
+There is no right choice here. Most of the time you don’t get to choose your first company—the fact that they accept your lack of experience will be the deciding factor. However, keep in mind that just because a section of our industry is “fast-paced” doesn’t mean you need to like it or to be looking for that.
+
+1.1.6 Experience
+Asking for experience from a junior developer is not only counterintuitive, it’s just plain silly. And I’ve been there. I know how it feels when you read a job listing asking for junior developers with experience in different technologies. You’re reading the listing trying to find a job so you can get the experience. It’s the egg and chicken problem.
+
+My advice is to ignore that part of the listing. It makes no sense, after all. Apply if you feel comfortable with some of the other requirements or if you feel like you can pick them up quickly.
+
+If you’re applying for the job and are worried about the experience part, you can showcase the types of experience you do have:
+
+If you’ve done some kind of online course, you can list it here.
+If you have published one or more personal projects somewhere (on GitHub, or somewhere else), you will definitely want to list it here.
+If you’ve worked as a volunteer on something remotely related to IT, list it here.
+Requiring experience for an entry-level position makes no sense, so listing experience should not be a prerequisite. But if you do want to address that point on your application, listing some of the preceding items is definitely better than saying “none.”
+
+livebook features:
+discuss
+  
+Ask a question, share an example, or respond to another reader. Start a thread by selecting any piece of text and clicking the discussion icon.
+1.2 Useful skills to have
+On the other end of the spectrum are skills that are never listed in typical job offers but that will help you to get your first job or to be considered a great developer. They’re not technical skills, though, so many new developers tend to omit them from their resumes.
+
+These are passive skills. You won’t actively have to use them; rather, they’ll be there in the back of your mind helping you in your daily routine. The most frustrating part about these skills is that there are no online courses or bootcamps that will help you train. These are soft skills that you need to be aware of in order to develop them (if you don’t already have them).
+
+I know that’s probably not what you wanted to hear, but these skills are the cornerstone of growing as a developer. Any technical skill can be learned over time by reading a manual or watching a video. But the skills discussed in this section will be there, helping you through that learning process. Yes, you’ll become a developer by learning how to code, but if you skip these five skills, it’ll be like learning to run before knowing how to walk.
+
+1.2.1 Patience
+Nothing says “I’m a software developer” like spending three hours debugging a piece of code, just to figure out that the problem was a missing comma somewhere in the middle. You’ll go through this a lot, and that is no sign of “juniority” or of lack of experience. Trust me, I go through that same process every now and then today, after almost 20 years.
+
+Understanding someone else’s code requires time and effort; researching how to solve a problem requires time and effort; writing code and getting it to work requires time and effort. Patience is not a virtue for a developer, it’s a must-have. Copying and pasting code from the internet will only get you half way. The rest needs to come from you, and there is a lot of trial and error involved.
+
+1.2.2 Determination
+In line with patience is determination—you have to understand that this is not an easy profession. I’m not saying this to scare you off. On the contrary, setting the right expectations is key to avoiding discouragement when bad things happen during your journey.
+
+The fact is that your chosen profession will be filled with roadblocks, with problems that once fixed become ten. You will encounter bugs that take months to solve, and each and every one of these situations will become a reason for you to quit. Trust me, I’ve wanted to quit programming multiple times during my career. The idea of moving to the middle of nowhere, away from technology, and growing tomatoes in the desert is appealing to many developers in our industry. Is that the sign of a problem in software development? I don’t think so, but it is proof that ours can be a frustrating profession at times.
+
+That is why determination is a must-have skill for developers, and you can build it up over time. It’s hard to know if you’re determined enough until you’re faced with a situation that challenges you, but if you’re already a determined person—someone who’s known to not give up on the first try—you’ll do fine as a developer.
+
+1.2.3 An eternal student mindset
+The underlying topic of this book is professional growth; you might have picked that up from browsing the table of contents. However, growth can’t happen without learning. I’ll cover learning in chapter 5, but I still want to highlight it here.
+
+One hard requirement I would demand from every new software developer is that they should always be learning, or at least be open to the idea of learning. While it is true that you don’t have to like a fast-paced work environment, our industry is always moving. Sometimes it moves forward, and sometimes it goes backward, making a 20-year-old pattern new again (I’m looking at you, React), and if you don’t keep tabs on these changes, you’ll be left behind.
+
+I’m not saying you need to go out and learn “all the things.” What I’m saying is that you should be open to the idea that the tools you’re using right now and the things you know right now will not always be the norm. If you don’t accept that, you’ll find yourself unable to move forward in your career within two years.
+
+Technology pushes technology forward; it’s that simple. The tools you use today will not be the same as the ones you’ll use tomorrow. New technology developments will open new areas of research, new ways of processing data, and new ways of interacting with users, and when that happens, development tools will have to adapt. If you don’t adapt with them, you’ll be left behind.
+
+1.2.4 Accepting criticism and learning from it
+Programming is not a solo profession. Even if you’re considering going freelance, you’ll have to interact with other developers in one way or another. And part of that interaction happens through feedback.
+
+Code review, for example, is a very common practice in software development. It ensures code quality by having a group of developers review the code written by someone else. If you’ve never been through it, it might sound strange, but it can be a growing experience for both parties if they perform it correctly:
+
+On the reviewing end, the group of developers reading the code need to understand that their job is to improve the code by finding logic issues, missing standards, or even some bugs.
+On the receiving end, you’ll need to understand that the feedback they’re giving you is not personal. Displaying your code for this kind of review can feel like that nightmare where you realize a little too late that you’re already in class, naked, in front of everyone. But trust me, the reviewers are putting their years of experience at your disposal. Accept their feedback, make sure you understand why it is given, and you’ll come out learning a lot.
+There are other instances where feedback will come into play as well. Sometimes you’ll be expecting it, like with performance reviews, and other times you won’t, like when an issue is reported on your open source project. Surviving negative feedback, especially when it’s not expected, can be hard if you’re not open to learning from it.
+
+I think it’s important to distinguish between feedback that shows a negative quality in our work (such as identifying a bug) and nonconstructive (negative) feedback that only shows how our work has affected others, to the point where they need to hurt or disqualify us with their words. There is always a nugget of wisdom in negative feedback; you just have to ignore the negative coating around it, and cut through to the core message and the lesson to be taken from it. You should consider the rest to be noise.
+
+As a technical lead, I’ve received hundreds of performance reviews in my career, and they’ve not always been positive. Whenever that happens, I always try to focus on getting to the core of the problem, to what caused that negative review so that I can avoid that behavior in the future.
+
+If you only see feedback as a bad thing, you’ll start second-guessing your decisions, and the whole point of that feedback (which was to help you improve) will be lost.
+
+1.2.5 Knowing how to communicate
+This is a tough one, because a very common problem among developers, even experienced ones, is that they don’t know how to communicate well with people. Sometimes we focus so much on learning how to write logic code for machines that our soft skills, no matter how small and undeveloped they are, tend to wither away. Machines don’t need us to write eloquent sentences, and they don’t really care for synonyms or the use of metaphors and figurative speech. They need clear, unquestionable logic. However, as a developer, you also need to work with humans, who, unlike machines, favor all those things.
+
+When you need to ask a colleague for help and explain a problem you’re having, or when you have to solve someone else’s problem, you’ll need to switch from your “machine-understandable syntax” to your “human-understandable” settings. This is why having communication skills before applying to your first job will give you a major advantage over everyone else in your situation. The moment your interviewer notices you can communicate effectively, the battle is half won.
+
+How can you develop this skill? One way to do it is through writing. Back when I started, both my written and spoken communication skills were terrible. I remember spending 30 minutes writing “important” emails because I had to go through them multiple times, adding words and explanations and asking colleagues to review them to see if they made sense or not.
+
+It was only when I started making a conscious effort to write online (articles for my own blog) that I started learning how to write more eloquently. You can say I started finding human-friendly ways of explaining concepts. This, in turn, helped my spoken communication skills as well—something “clicked” in my brain. Through that and other working experiences, I was able to learn how to effectively talk to others, which then helped me in my path to leading teams as well.
+
+Knowing how to communicate well with others is an important skill to have, and the great news is that you can start practicing it right now, for free.
+
+1.3 What about after you get the job?
+The trick to having a successful career as a software developer is to remember that you’re not done when you get your job. You’re just getting started. Getting the job is like getting to the max level on your favorite MMORPG and thinking you beat the game, when, in fact, you just unlocked a whole new level of content specifically designed for you. Getting the job doesn’t mean you’ve mastered the trade; it just means you’re now standing on the first step of a huge ladder. The skills I listed in this chapter will have to be developed and maintained throughout the course of your life, and the more you work on them, the better you’ll do.
+
+The rest of this book will cover other areas you’ll need to focus on once you’ve decided to become a software developer, and they are just as important as the ones covered here. But always keep these skills in mind, as they’ll be the building blocks for everything else you learn in the coming chapters.
+
+Summary
+Keep honing your communication skills. They’ll always be useful, but the higher on the ladder you climb, the more important they’ll become.
+Understanding how to grow from negative feedback will keep you from getting stuck in your career.
+Working on your patience and determination will ensure you never meet a problem you can’t solve. These two skills have taught me that nothing is impossible in our profession, as long as you have enough time and people to work on it.
+Staying relevant in our industry is a must for anyone who’s interested in advancing their career. That means looking outside your own box (outside your daily work) to find out what others are doing. Technology evolves constantly, so keep an eye on it.

@@ -1,0 +1,189 @@
+Hi there! Maraming salamat (“many thanks” in Tagalog) for being an early adopter and purchaser of the MEAP for Looks Good To Me: Constructive code reviews.
+
+This book is for developers and engineering leads/managers who want a comprehensive and compassionate guide on code reviews. The advice shared here can benefit almost all developers, but it will be most relevant to those who work on teams, have at least a year of experience working with version control systems (like git), and have been reading and writing code for at least a year or two.
+
+Over the past eleven years of my career as a software developer and technical instructor, I’ve heard a recurring theme on code reviews: we need them, but we dread them. In this book, I try to address that dread. And surprise! Most of that dread comes from the people in the process, rather than the tools or machines we work with.
+
+Through a mix of practical advice, flexible strategies, personal career lessons, lots of automation, and discussions to have with your team, this book aims to take you way past bare minimum code reviews. You’ll collaboratively build a process that fits your team’s needs, whether you’re starting from scratch or need to overhaul the code review you have.
+
+I hope that the content you get access to will be instantly relevant and applicable to you and your team. And with your help, the final book will have you saying not just “LGTM 👍”(looks good to me), but “looks GREAT to me”!
+
+I welcome and encourage your comments, questions, suggestions, or praises in the liveBook Discussion forum. This helps me help you get the best book possible – I’ll rely on these discussions to make sure I’m on the right track, am not missing anything important, and am considering as many permutations of teams as possible.
+
+With that, thank you for purchasing the MEAP and for caring about code reviews.
+
+— Adrienne Braganza
+
+1 The significance of code reviews
+
+Mike, a developer on a small software development team, just finished a new feature on Friday. He built an entirely new invoice parsing system that would render customers’ invoices as a PDF. And he finished it just in time for his vacation in Cancún. Sure, there were some workarounds and hacks in parts of his code, but hey, it worked. Excited, he quickly merged his new feature into the demo environment; his colleagues (Adrienne, Erica, and Justin) agreed to demo the new invoice parser to the CEO while Mike was out.
+
+On Monday morning, Adrienne stared at her screen confused. She began testing the parser and found that it was calculating the invoices incorrectly. Debugging was almost impossible as she couldn’t make sense of Mike’s code. She asked both Erica and Justin if they could try their hand at understanding the new parser code. After some time, both defeatedly shook their heads “no.” As they huddled around Adrienne’s screen to try and understand the mystery code, Mike shared photos of his vacation in the team’s messaging channel – beaches he laid on, margaritas he drank, and tasty dishes he ate. The team sighed.
+
+
+Unfortunately, the team was unable to fix the calculation issue by the time of the demo. They couldn’t “fake” the demo – the code was so hard to understand to even know what to manipulate and make it do the right thing – and couldn’t reschedule the demo as it was already rescheduled twice. They had to show the new feature to their CEO with its major flaw. As they performed the demo of the new parsing system, the CEO was not happy. This feature was already supposed to be deployed last quarter. To make matters worse, the fees were wrong – by a lot – and it was glaringly obvious in the demo. Adrienne, Erica, and Justin were under intense pressure to “fix this faster than as soon as possible,” a direct quote from the CEO.
+
+As they debugged, they found the relevant code where fees were indeed calculated incorrectly, but were not sure why. Adrienne and her colleagues spent the rest of that Monday – and Tuesday and Wednesday – working overtime to understand the code and find the issue. After those stressful few days, they finally found it: an incorrect calculation hidden behind “clever” code and single-letter variable names produced the wrong fee. As a (sour) cherry on top, they confirmed that the new invoice PDF parser system irresponsibly pulled the charge amounts from the generated PDF – rather than a more durable source of truth. This was a major change from the conventions of the codebase, and a wrong one at that. At this point, it was pretty clear that this new parsing system introduced some headache-inducing bugs.
+
+The team worked as quickly as they could to get invoices functioning properly again. It was a bit tricky as there were no tests (tsk tsk, Mike) and the code was cryptic – the team felt that even Mike wouldn’t understand his own code once returning from vacation. In the end, Adrienne, Erica, and Justin all agreed that they never wanted to go through something like that again.
+
+As you read this story, you may have thought, “Why didn’t Mike’s colleagues look through his code or give a quick thumbs up before moving forward? Why was there no knowledge sharing between Mike and his team or any explanation of his changes? And were there no automated tools that could have caught some of these bugs?”. These are all great questions and they all lead to what this book is about: code reviews.
+
+So what’s a code review? At its core, it’s a process software developers use to inspect each other’s code, making sure it passes a set of agreed-upon standards. The inspection part can happen over your shoulder, through a more formal meeting with a governing board of approvers, or, as is the focus in this book, through a pull request. A pull request is a proposal of code changes that can be reviewed, discussed, and commented on before being merged into a larger codebase. Pull requests are common in tools like GitHub, GitLab, Bitbucket, Azure Repos, AWS CodeCommit, Google Cloud Source Repositories, or any number of collaborative code tools backed by private Git repositories.
+
+Code reviews are also the missing piece to our earlier story. A very simplistic one Mike’s team could have employed could be: Mike’s new parsing system changes are prepared in a pull request, then Adrienne, Erica, or Justin (at least two, ideally the whole team) take a look to see if everything’s good. Since things obviously weren’t, Mike’s teammates could have given him feedback: the code was too cryptic, was straying from the codebase’s conventions, and didn’t have accompanying tests for such an important feature. Mike’s code would never have progressed to the demo environment in the state it was in.
+
+While this book focuses on code reviews, I need to call out its complementary and co-dependent nature to an overall continuous integration and continuous delivery strategy. Continuous integration (CI) refers to the automation of building, testing, and integrating code changes within a shared repository. Continuous delivery (CD) refers to the automation of delivering code changes to an environment for approval. Together, they form a CI/CD pipeline, which is a set of automated workflows a software development team uses to cut down on manual tasks of the software development process. While a fully automated CI/CD pipeline is an alluring goal we should strive for, it’s not foolproof for protecting and maintaining the health of a codebase. Where CI automates and evaluates code quality through static analysis, unit tests, and other “computer-friendly” mechanisms, code reviews allow developers to evaluate code with a nuanced, context-aware, and domain knowledge-aware eye. We need both. And overall, the more safeguards a team can put into place to make sure healthy code is the only code that gets deployed, the better.
+
+It’s also vital to point out that a good code review process plays a role in an organization’s overall approach to supply chain security and build environment security. With everyone’s participation in and support for code reviews, you contribute to the overarching goal of building valuable software for your organization.
+
+What about Continuous Deployment?
+When you hear or read about CI/CD pipelines, the “CD” is likely referring to continuous delivery rather than the equivalently abbreviated continuous deployment. In continuous delivery, the automated workflows in a pipeline are briefly paused or stopped since they require human intervention to approve the final push to production. Alternatively, continuous deployment is fully automated – as long as code changes pass all the required tests implemented in the pipeline, they are deployed to customers right away. I like to remember the difference in this way: continuous delivery delivers a sign-off (like a delivery driver asking you to sign for a package); continuous deployment deploys a ready-to-go feature (exactly like the definition of “deploy”, which is to move into a position of readiness).
+
+Now, some of you might be thinking, “I know how important code reviews are and we DO have a code review process in place”. To that, I say great! That’s a wonderful start. Let’s continue to pull on that thread: Ask yourself, and more importantly, all the members of your team:
+
+Is our current code review process useful?
+Do our code reviews take too long?
+Are we placing the reviewing burden on a single person?
+Do we still like each other after a difficult code review?
+Do we know how to leave a suggestion or constructive criticism?
+Do we know how to effectively deal with feedback?
+Is our review process fulfilling the purpose we believe they are supposed to fulfill?
+Are we aligned on what that purpose is?
+Are we taking advantage of any automation?
+Do we know what’s expected of each party in our code review process?
+Do we all understand the value code reviews bring to our software development process?
+Can we show why code reviews matter and link them to the business value they deliver?
+Can we confidently say that we love our process?
+In my conversations with developers around the world, as well as my own experiences over the past twelve years on a multitude of teams, I’m willing to bet that you’ve answered “no” to at least a few of those questions. I can also tell you that there’s a consistent theme: software developers dread their code reviews. Whether that’s because it’s an inconsistent, unsustainable, inefficient, unfair, uselessly manual, or otherwise non-existent process, or there is a lack of empathy between teammates during the review itself, or some other bottleneck of “human origin”, code reviews are avoidably the bane of many developers’ existence.
+
+Through this book, I want to change this reality. Whether this is the first time you’ve heard of a code review or are sick and tired of them, I want you to experience code reviews the way they can be: effective, empathetic, and effortless for your team.
+
+One big caveat as you read this book: this is not a “one-size-fits-all” approach for code reviews – your team’s needs, wants, and limitations will differ (imagine writing a book that covers all possible team scenarios)! Rather, this is a guide to help you set up or improve, then continuously refine and evolve a manageable process. I try to generalize the advice I give to help the most teams create a code review process that works within their team and organizational constraints, achieves the goals they wish it to accomplish, complements a larger CI/CD pipeline, and is one the team is happy and proud of. Ultimately, this book is here to make your code reviews better by improving the process – even if that progress is small or incremental.
+
+Even if you just take a few tactics and implement them today or share a piece of advice learned from this book with a colleague, I’ll consider that a success to code reviews everywhere. Let’s get to it.
+
+livebook features:
+highlight, annotate, and bookmark
+  
+Select a piece of text and click the appropriate icon to annotate, bookmark, or highlight (you can also use keyboard shortcuts - h to highlight, b to bookmark, n to create a note).
+
+You can automatically highlight by performing the text selection while keeping the alt/ key pressed.
+1.1 Who this book is for
+This book will be valuable to anyone that reads, writes, and reviews code. Through actionable advice, automation tactics, collaborative strategies, and team-enforced techniques, this book will guide developers, tech leads, and engineering managers on building a code review process from scratch or upgrading an existing one that’s subpar.
+
+If you’re just starting out in software development: I want you to understand why code reviews are important and explore how it’s critical to creating maintainable, understandable, and valuable applications, to acknowledge that organizations need it (even if they don’t understand it), and to recognize that we can’t just let AI take care of them for us.
+
+If you’re on a software development team and aware of the importance of code reviews, but need help creating a process for their own team: I want to guide you through creating a code review process from scratch, from convincing your team and establishing a fair and effective process from the start to choosing what your code review process will do for your team and how.
+
+If you’re a developer that sees their team’s code review process could be improved: I want to share tactics, strategies, and mindsets that you can implement and experiment with, many of which solve common issues and problems that plague many teams’ code reviews today. And if “improving” your process means redoing your process (😃), I’ll advise you on how to define better guidelines and rules you’ll enforce as a team.
+
+If you’re a developer that wants help in navigating difficult reviews: I want to give you structured processes that help you find middle ground with your colleagues and strategies for handling typical code review disagreements.
+
+If you’re a developer that has trouble composing code review feedback: I want to give you reusable comment strategies, from one that helps organize and streamline feedback for both the author and reviewer to one that helps you objectively and effectively ask for a change.
+
+If you’re a senior or lead developer that’s tired of being the only reviewer: I want to solve this “bottleneck” issue and help you fairly and efficiently redistribute the reviewing responsibility in a way that makes sense and contributes to the overall improvement of the team’s skills.
+
+If you’re a tech lead or lead developer that wants to improve their team’s code review dynamic: I want to help you help your team to be more considerate of each other through code review comment patterns (that your team can use to compose effective, yet considerate code review comments) and introduce you to the Team Working Agreement, a document that can help your team understand each other’s expectations around the code review.
+
+If you’re a tech lead or engineering manager that is frustrated with particularly long code review cycles: I want to unravel the reasons why code reviews can take so long, train you to spot potential factors that contribute to long code reviews on your own team, and share what can be done to reduce code review times.
+
+If you’re a tech lead or engineering manager that wants to support and enable a pro-code review culture: I want this book to serve as a helpful guide on the holistic code review process, even if you don’t participate in the review phase itself. I want to help you appreciate the benefits of a code review, anticipate (and deal with) common issues that arise, prevent “human” bottlenecks, enable your team to build a code review process that addresses their needs, and recognize how you can best support your team’s code reviews.
+
+No matter who you are, I’ll guide you through the code review process with a “human” lens – to transform a process that’s been known to be forgotten, despised, and used to build up one’s ego into a much more enjoyable, praised, and supported part of the software development workflow. I mean, for such an integral part of software development – not to mention the countless tools we have at our disposal – there should be a better way…and this book will help you get there.
+
+It is worth noting who this book is not for: this book may not make sense for you if you primarily work alone, like a “one-person” army or solo developer at a startup. The tactics and advice shared here focus on solving problems that exist between people, so those sections may not apply. However, learning what’s in this book can set a wonderful foundation for you once you do start working on a larger team!
+
+Also, while this book presents guidelines on how to review code effectively and generalized criteria to judge code on, this book is not for those who want to learn what to look for while you review your colleague’s code – that will differ greatly between programming languages, application architectures, and your company’s internal standards. So, if you are looking for a guide on how to spot code smells, a reference on programming conventions and best practices, or a book that teaches you how to write good code, this is NOT the book you’re looking for 👋 (waves hand in Jedi-like motion).
+
+If that’s what you ARE looking for, I’d highly recommend Steve McConnell’s Code Complete: A Practical Handbook of Software Construction or Christian Clausen’s Five Lines of Code: How and When to Refactor. Both are excellent references on what to look for in code reviews and how to make the code you’re reviewing better.
+
+livebook features:
+discuss
+  
+Ask a question, share an example, or respond to another reader. Start a thread by selecting any piece of text and clicking the discussion icon.
+1.2 How this book is structured
+In Part One - Code Review Foundations (chapters 1, 2, and 3), we start with some basics. You’re currently reading Chapter 1, which introduces you to the code review, its benefits, and why they are significant in the context of software development. It also outlines who this book is for and how it’s structured. Chapter 2 dissects the code review and establishes all the basics you should know: what types of review systems there are, what a typical workflow is like, what the elements of a good pull request are, and who the main characters of a code review are and the responsibilities each one holds. Chapter 3 breaks down how to build your team’s first code review process, step-by-step. You’ll walk through establishing a code review process collaboratively and ask your team to make some important decisions about the code review they are creating.
+
+With a foundation laid, Part Two - Elevated Code Review Essentials (chapters 4, 5, and 6) gets into the good stuff. These chapters delve into specific skills you’ll need to not only perform code reviews, but do them well. Chapter 4 explores the important Team Working Agreement. Everything about it, from what it is to why your team needs it and how it helps enforce code review policies to how to maintain it will be addressed. Chapter 5 focuses on automation tactics, both during development and during the review. Chapter 6 teaches us why words matter and how to write considerate, yet effective code review comments for almost any scenario.
+
+Part Three - Dealing with Dilemmas (chapters 7, 8, 9, and 10) gets into the tricky stuff that can pop up as your team gets used to code reviews. Chapter 7 outlines some pain points and real developer stories of code reviews gone wrong. Chapter 8 takes a look at the prevailing problem of lengthy code reviews – specifically why they may get delayed and how to make reviews much shorter. Chapter 9 digs into some code review process loopholes. Namely, what to watch out for and how to fix them if we spot them in our own code review (tech leads and engineering managers, Chapter 9 is for you!). We then end Part Three with Chapter 10, an introduction to the Emergency Playbook. This is a helpful tool that allows your team to deal with situations that don’t fit neatly into your established code review process. You’ll likely find the actionable pieces of advice that you can use today in Part Three of the book.
+
+By Part Four - Pairing Code Reviews with Other Practices (chapters 11, 12, and 13), you can choose to learn more about code reviews within the context of other software development practices before I leave you with my thoughts on the future of code reviews. Chapter 11 explores combining code reviews and pair programming while Chapter 12 explores combining code reviews with mob programming. Both chapters answer the questions, “Do we still need code reviews if we do this?” and “How do we do both well?”. Finally, Chapter 13 discusses code reviews and AI; what’s possible right now (at least during the time of writing) and what to be mindful of as we (inevitably) introduce AI into our code reviews.
+
+While I highly recommend reading this from cover to cover, there are other ways to make the most of this book:
+
+If you just accepted code reviews into your life, but don’t know how to start the process with your team: I’d start with Chapter 2, then really dig into Chapters 3 and 4. Once you have a good cadence and your team is used to code reviews, you can start making your way through the rest of Part 3 to refine it and tailor the process to your team.
+If your code reviews are terrible, no good fiascos: Same as those starting from scratch (you’ll be better off redoing your team’s code review foundation, trust me); start with Chapter 2 and take your time with Chapters 3 and 4. Since you’ve experienced what a terrible code review process is like, you’ll likely ease into Part 3’s chapters a lot sooner than those starting from scratch as you’ll know what to improve or do better this time around.
+If your team understands the importance of code reviews, but can’t agree on anything: Start with Chapter 4, then go through the rest of the book.
+If your code reviews are alright but you know they can be WAY better: You can likely jump straight to Chapter 5, and 6 (and beyond) and start experimenting with automation tactics and enhanced code review policies, among other neat things to improve your process. You can also refer back to Chapters 2, 3, and 4 as needed.
+If your team needs some help with constructive feedback (like, how to give and receive it): Head straight to Chapter 6. Then refer back to the rest of the book as necessary.
+As a general rule: Chapters 2, 3, and 4 can be equally valuable to most teams, no matter where you are in the code review-building process.
+Lastly, this is meant to be a book that keeps on giving. Once you have established a process with your team, feel free to refer back to it as needed. Recommend specific sections to new team members or establish it as required reading for all code review participants. Pick and choose different tactics as you need them or when you are refining your process. This book should be your best code review friend.
+
+livebook features:
+settings
+  
+Update your profile, view your dashboard, tweak the text size, or turn on dark mode.
+1.3 You should want code reviews
+Code reviews should be the norm, rather than the exception. Their use results in better applications, promotes codebases that are clear and readable, and can produce invaluable artifacts that describe how and, more importantly, why your codebase has changed over the years. I’m telling you, you should want code reviews…
+
+1.3.1 Better applications
+Code reviews (paired with a well-rounded CI/CD strategy) keep codebases healthy and secure. When done properly and consistently, code reviews minimize the number of defects that enter production. This has been proven time and time again. IBM’s 500,000-line Orbit project used eleven(!) levels of review, resulting in only 1% of expected errors being found without review [1]. AT&T’s case study showed a 90% decrease in defects once code reviews were introduced to a 200-person organization within the company [1]. A large-scale study of modern code review and security in open-source projects conducted by the University of California-Berkeley shows that code review reduces the number of bugs and security bugs in production [2]. Then there’s a case study titled The Impact of Code Review Coverage and Code Review Participation on Software Quality that I think sums it up best: “If a large proportion of the code changes that are integrated during development are either: (1) omitted from the code review process (low review coverage), or (2) have lax code review involvement (low review participation), then defect-prone code will permeate through to the released software product” [3].
+
+Code reviews also promote better clarity and readability of code as developers review each other’s work. Whether it’s because you know someone else is going to look at your code or just generally try to write human-friendly code, the process seems to encourage us to tidy up and present our code changes in the best light. Clear, readable, human-friendly code generally means it’s also maintainable code, and a maintainable codebase typically lowers the chances of bugs being introduced in the future. As an important, human-only quality check, code reviews make applications better.
+
+As code quality continuously improves (and stays healthy), and the understanding and maintainability of the code also improves, the amount of people, time, and money needed for debugging and fixing the application is reduced later on.
+
+Having a codebase that a team can confidently work on simplifies (and sometimes, makes possible) adherence to compliance requirements, regulatory standards, and internal audits of the codebase. This all boils down to a codebase whose overall maintainability improves over time, thanks in large part to code reviews. All of these things promote better code which usually translates to better applications.
+
+1.3.2 Elevated team understanding
+Often an overlooked benefit, code reviews can boost a team’s overall understanding of their codebase and each other. When prioritized, code reviews can act as both a knowledge-transfer (the deliberate process of moving knowledge from one person or group to another) and a knowledge-sharing (the exchange of knowledge in a readily accessible environment) mechanism between team members. This makes it a useful onboarding mechanism, integrating new team members faster.
+
+With code reviews, the opportunity to share and transfer knowledge between all involved naturally presents itself. This can lead to more people on your team understanding a larger percentage of your codebase. With more knowledge equally spread across the team, you can reduce the overall team’s dependency on specific team members. No more feeling guilty for taking time off!
+
+Finally, effective code reviews, combined with automation practices and clear team policies (like proper commit messages, PR descriptions, and a commitment to explaining the “why” of your changes), can be the living record of your codebase's evolution. How powerful would that be to know exactly when, where, and why a particular change caused an issue or produced a positive change?
+
+With some really kick-ass perks, it shouldn’t be so difficult to get your team on board. Unfortunately, there might be a few people who aren’t so excited about code reviews.
+
+livebook features:
+highlight, annotate, and bookmark
+  
+Select a piece of text and click the appropriate icon to annotate, bookmark, or highlight (you can also use keyboard shortcuts - h to highlight, b to bookmark, n to create a note).
+
+You can automatically highlight by performing the text selection while keeping the alt/ key pressed.
+1.4 Convincing your team
+Let’s be clear about something, most software development teams are not against a code review process, just the annoyances that surround it.
+
+Because of this, it can take some effort to convince your team that they are still worth it. This is especially true if you are starting without a code review process in place! That’s why the key to convincing your team is to first get on the same page (of this book 😉).
+
+So as Khalid aptly sings, “Can we just talk?”, convincing your team starts with an open conversation with everyone. From the developers that write the code to the tech leads that influence the policies and even the engineering managers that play a part in enforcing the process, every individual should be invited to this conversation.
+
+In this conversation, likely more than one, you’ll need to find common ground on a lot of topics:
+
+What are the goals of our code review?
+Who needs to know about this change?
+How do we decide who reviews PRs?
+How long do we give reviewers to approve pull requests?
+Do we require a minimum of two approvers? Three?
+What do we do when we need to deploy an emergency hotfix?
+These conversations can be held every week when first starting. Alternatively, this topic is a great thing to discuss during engineering offsites, a typical week-long engagement where teams plan their future vision, goals, and projects. As you start to define and refine the common ground for your team, it should be codified into a living, working document your team can reference. An example of this is the Team Working Agreement, which will be explained in detail in Chapter 4.
+
+By gathering everyone’s opinions, actively encouraging every member to participate in these conversations, and building a process around the team’s collective goals, you’ll have the best chance at convincing your team to give code reviews a try or another shot.
+
+Ask a question, share an example, or respond to another reader. Start a thread by selecting any piece of text and clicking the discussion icon.
+1.5 Making code reviews better
+Once you have a code review process in place (or if you’re reading this book eager to make changes to your existing one), your team will likely want to make updates and improvements to it. To make code reviews better, we need to consider two things.
+
+First, proper engineering discipline has to be a core goal of the team. For code reviews, that means producing an artifact – the code being written – that is durable and valuable. When the developers on your team can easily understand the code – and still understand it a few years from now – durability is achieved. Likewise, code becomes valuable when bug fixes are quicker to apply and extensions to functionality are easier, or even possible, to implement. When a team has durability and value ingrained, the code they write and the code reviews they complete are likely better.
+
+Second, we can’t forget the people behind the code. From the practices performed to the conversations held, the foundation of great code reviews is built within an environment that encourages feedback and on a cohesive team. What does a cohesive team look like? It’s where each team member is able and willing to share their opinion, wants to contribute to key team conversations, feels safe bringing up concerns, can confidently rely on their colleagues to do their best work, and generally just trusts that others will treat them with kindness and respect. There’s no room for egos on a cohesive team – favoritism, bias, nepotism, selfishness, and a lack of humility also don’t have space on a cohesive team.
+
+For a great code review process to be built, a team has to know what it wants, what it doesn’t want, what systems work best for the team, what is possible with their organizational and team constraints, what it’s collective goals and standards are, and have a collective sense of ownership and accountability to the codebases they maintain – this only happens when a team works well together. Only then will a repeatable and worthwhile code review be created.
+
+With all that out of the way, I’m excited to share what I’ve experienced, learned, developed, experimented with, researched, and corroborated over the years on how to make code reviews the best that they can be. And you know what? This book is the culmination of ideas, automation tactics, templates, patterns, and strategies that you can use to create the code review process of your team’s dreams. Ready to get started?
+
+1.6 Summary
+A code review is a process software developers use to inspect each other’s code, making sure it passes a set of agreed-upon standards. The inspection part can happen over your shoulder, through a formal meeting, or through a pull request (a proposal of code changes that can be reviewed, discussed, and commented on before being merged into a larger codebase).
+Code reviews should be the norm, rather than the exception in software development. Why? Code reviews produce better applications (through clear, readable, maintainable code) and elevate a team’s understanding of their codebase and each other (through the knowledge-transfer, knowledge-sharing, and record-keeping mechanisms it provides).
+Great code reviews are built on the foundation of a cohesive team – meaning a team where all members feel respected, valued, and treated as an equal part of the team.
